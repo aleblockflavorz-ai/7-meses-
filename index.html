@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>23</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para ti 💌</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  text-align: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+.banner {
+  background: white;
+  margin: 15px auto;
+  padding: 15px;
+  width: 220px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+}
+
+.box {
+  background: white;
+  margin: 100px auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 15px;
+}
+
+.carta {
+  position: relative;
+  margin: 60px auto;
+  padding: 25px;
+  width: 320px;
+  border-radius: 20px;
+  color: white;
+}
+
+#textoCarta {
+  white-space: pre-line;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.decoracion {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 30px;
+}
+
+/* TEMAS */
+.alondrissaCarta { background: #5a1a5c; }
+.alondrissaCarta .decoracion::after { content: "💕"; }
+
+.mikoCarta { background: linear-gradient(135deg,#1a1a2e,#6a00f4); }
+.mikoCarta .decoracion::after { content: "🎧"; }
+
+.pocoyoCarta { background: linear-gradient(135deg,#4facfe,#00f2fe); }
+.pocoyoCarta .decoracion::after { content: "🎈"; }
+
+.snoopyCarta { background: #fff; color:black; }
+.snoopyCarta .decoracion::after { content: "🐶"; }
+
+.robleisCarta { background: linear-gradient(135deg,#0f2027,#2c5364); }
+.robleisCarta .decoracion::after { content: "🎮"; }
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #ff6b81;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>💌 Para ti</h1>
+
+<div class="banner" onclick="abrir(0)">Carta 1</div>
+<div class="banner" onclick="abrir(1)">Carta 2</div>
+<div class="banner" onclick="abrir(2)">Carta 3</div>
+<div class="banner" onclick="abrir(3)">Carta 4</div>
+<div class="banner" onclick="abrir(4)">Carta 5</div>
+<div class="banner" onclick="abrir(5)">Carta Final ❤️</div>
+
+<!-- PREGUNTA -->
+<div id="modalPregunta" class="modal" onclick="cerrarTodo()">
+  <div class="box" onclick="event.stopPropagation()">
+    <p id="pregunta"></p>
+    <input id="input" placeholder="Responde aquí">
+    <br>
+    <button onclick="verificar()">Responder</button>
+  </div>
+</div>
+
+<!-- CARTA -->
+<div id="modalCarta" class="modal" onclick="cerrarTodo()">
+  <div id="carta" class="carta" onclick="event.stopPropagation()">
+
+    <div class="decoracion"></div>
+
+    <p id="textoCarta"></p>
+
+    <button onclick="cerrarTodo()">Cerrar</button>
+
+  </div>
+</div>
+
+<script>
+const preguntas = [
+  "¿Por dónde empezamos a hablar?",
+  "¿Quién respondió primero?",
+  "¿Qué hizo que siguiéramos hablando?",
+  "¿Cuál fue el primer apodo?",
+  "¿Qué hacíamos juntas?",
+  "¿Qué fecha empezamos?"
+];
+
+const respuestas = [
+  "tiktok",
+  "yo",
+  "conexion",
+  "lunita",
+  "jugar",
+  "23 de agosto"
+];
+
+const cartas = [
+`Mi amor, felices 7 meses estoy muy feliz por poder estar contigo y porque a pesar de tantas cosas que han pasado entre nosotras y las veces que nos hemos separado, este amor sigue intacto y seguimos estando la una para la otra siempre.
+
+No sabes lo agradecida que estoy por tanto, por conocerte, por estar a tu lado por poder ser quien te ame y este contigo.
+
+No me veo con nadie más que no seas tú.`,
+
+`Te quiero pedir perdón por todo lo que he hecho mal, especialmente por este último mes.
+
+Perdón por hacerte sentir mal y por haberte podido perder.`,
+
+`Te pienso siempre sin importar dónde esté.
+
+Eres lo único que está en mi mente 24/7.`,
+
+`Siento que nunca me van a alcanzar las palabras para expresar lo que siento por ti.
+
+Eres mi paz incluso cuando todo está mal.`,
+
+`Mi princesa, para mí siempre serás la mejor niña de todas.
+
+Amo cada cosa de ti.`,
+
+`Gracias por seguir aquí conmigo.
+
+Espero que podamos estar juntas toda la vida.
+
+Te amo muchísimo.`
+];
+
+let actual = 0;
+
+function abrir(i) {
+  actual = i;
+  document.getElementById("modalPregunta").style.display = "block";
+  document.getElementById("pregunta").innerText = preguntas[i];
+  document.getElementById("input").value = "";
+}
+
+function verificar() {
+  let val = document.getElementById("input").value.toLowerCase().trim();
+
+  if (val.includes(respuestas[actual])) {
+    document.getElementById("modalPregunta").style.display = "none";
+    mostrarCarta();
+  } else {
+    alert("Intenta otra vez 💌");
+  }
+}
+
+function mostrarCarta() {
+  const carta = document.getElementById("carta");
+
+  carta.className = "carta";
+
+  if (actual === 0) carta.classList.add("alondrissaCarta");
+  if (actual === 1) carta.classList.add("mikoCarta");
+  if (actual === 2) carta.classList.add("pocoyoCarta");
+  if (actual === 3) carta.classList.add("snoopyCarta");
+  if (actual === 4 || actual === 5) carta.classList.add("robleisCarta");
+
+  document.getElementById("textoCarta").innerText = cartas[actual];
+
+  document.getElementById("modalCarta").style.display = "block";
+}
+
+function cerrarTodo() {
+  document.getElementById("modalCarta").style.display = "none";
+  document.getElementById("modalPregunta").style.display = "none";
+}
+</script>
+
+</body>
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
